@@ -39,6 +39,22 @@ export default class SignUp extends Component {
             <TextInput
               autoCorrect={false}
               autoCapitalize="none"
+              placeholder="Enter firstname"
+              placeholderTextColor="#ffffff"
+              keyboardAppearance="light"
+              returnKeyType="next"
+            />
+            <TextInput
+              autoCorrect={false}
+              autoCapitalize="none"
+              placeholder="Enter lastname"
+              placeholderTextColor="#ffffff"
+              keyboardAppearance="light"
+              returnKeyType="next"
+            />
+            <TextInput
+              autoCorrect={false}
+              autoCapitalize="none"
               placeholder="Enter Password"
               placeholderTextColor="#ffffff"
               keyboardAppearance="light"
