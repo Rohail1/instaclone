@@ -10,6 +10,7 @@ import {
   Image,
   Text,
   KeyboardAvoidingView,
+  TouchableHighlight,
   Button
 } from 'react-native';
 
@@ -20,6 +21,7 @@ export default class Login extends Component {
     title: 'Login',
   };
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <KeyboardAvoidingView behavior="padding" style={loginStyles.container}>
         <View style={loginStyles.logoContainer} >
@@ -53,7 +55,7 @@ export default class Login extends Component {
                     style={loginStyles.loginButton}
                     title="Login"
             />
-            <TouchableHighlight  onPress={() => navigate('Sig')}>
+            <TouchableHighlight  onPress={() => navigate('Signup')}>
               <Text style={loginStyles.title}>Not registered ? Signup here</Text>
             </TouchableHighlight>
           </View>

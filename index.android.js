@@ -10,7 +10,7 @@ import {
   StyleSheet,
   View
 } from 'react-native';
-
+import { StackNavigator } from 'react-navigation';
 import SignUp from "./app/components/signup/signup"
 import Login from "./app/components/login/login"
 
@@ -23,8 +23,10 @@ import Login from "./app/components/login/login"
 }*/
 
 const instaclone = StackNavigator({
-  Signup: { screen: SignUp },
-  Login: { screen: Login },
+  Signup: { screen: SignUp, routeName : 'SignUp' },
+  Login: { screen: Login, routeName : 'Login'  },
+},{
+  initialRouteName : 'Login'
 });
 
 AppRegistry.registerComponent('instaclone', () => instaclone);

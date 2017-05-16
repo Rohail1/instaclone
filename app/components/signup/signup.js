@@ -10,6 +10,7 @@ import {
   Image,
   Text,
   KeyboardAvoidingView,
+  TouchableHighlight,
   Button
 } from 'react-native';
 
@@ -72,7 +73,7 @@ export default class SignUp extends Component {
                     style={signUpStyles.loginButton}
                     title="Login"
             />
-            <TouchableHighlight  onPress={() => navigate('Signup')}>
+            <TouchableHighlight  onPress={() => navigate('Login')}>
               <Text style={signUpStyles.title}>Aready Registered ? Login here</Text>
             </TouchableHighlight>
 
