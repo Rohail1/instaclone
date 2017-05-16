@@ -42,11 +42,9 @@ function nav(state = initialNavState, action) {
 function auth(state = {}, action) {
   switch (action.type) {
     case 'Login':
-      console.log('Login');
-      return { ...state, isLoggedIn: true };
+      return { ...state, isLoggedIn: action.isLogin };
     case 'Signup':
-      console.log('signup');
-      return { ...state, isLoggedIn: false };
+      return { ...state, isLoggedIn: action.isLogin};
     default:
       return state;
   }
