@@ -6,25 +6,28 @@
 
 import React, { Component } from 'react';
 import {
-  AppRegistry,
-  StyleSheet,
-  View
+  AppRegistry
 } from 'react-native';
 
-import SignUp from "./app/components/signup/signup"
-import Login from "./app/components/login/login"
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
-/*export default class instaclone extends Component {
+import AppReducer from './app/reducers/reducers';
+import AppWithNavigationState from './app/navigators/AppNavigator';
+
+
+class instaclone extends Component {
+  store = createStore(AppReducer);
+
   render() {
     return (
-      <SignUp/>
+      <Provider store={this.store}>
+        <AppWithNavigationState />
+      </Provider>
     );
   }
-}*/
-
-const instaclone = StackNavigator({
-  Signup: { screen: SignUp },
-  Login: { screen: Login },
-});
+}
 
 AppRegistry.registerComponent('instaclone', () => instaclone);
+
+export default instaclone;
