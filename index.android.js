@@ -14,17 +14,9 @@ import { StackNavigator } from 'react-navigation';
 import SignUp from "./app/components/signup/signup"
 import Login from "./app/components/login/login"
 
-/*export default class instaclone extends Component {
-  render() {
-    return (
-      <SignUp/>
-    );
-  }
-}*/
-
 const instaclone = StackNavigator({
-  Signup: { screen: SignUp, routeName : 'SignUp' },
-  Login: { screen: Login, routeName : 'Login'  },
+  Signup: { screen: SignUp, },
+  Login: { screen: Login, },
 },{
   initialRouteName : 'Login'
 });
