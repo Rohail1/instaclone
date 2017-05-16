@@ -18,12 +18,11 @@ import {signUpStyles} from "./styles"
 
 export default class SignUp extends Component {
   static navigationOptions = {
-    title: 'Signup',
+    title: 'Register !',
   };
 
 
   render() {
-    const { navigate } = this.props.navigation;
     return (
       <KeyboardAvoidingView behavior="padding" style={signUpStyles.container}>
         <View style={signUpStyles.logoContainer} >
@@ -73,9 +72,6 @@ export default class SignUp extends Component {
                     style={signUpStyles.loginButton}
                     title="Login"
             />
-            <TouchableHighlight  onPress={() => navigate('Login')}>
-              <Text style={signUpStyles.title}>Aready Registered ? Login here</Text>
-            </TouchableHighlight>
 
           </View>
         </View>
