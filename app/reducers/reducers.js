@@ -19,7 +19,7 @@ function nav(state = initialNavState, action) {
   switch (action.type) {
     case 'Login':
       nextState = AppNavigator.router.getStateForAction(
-        NavigationActions.navigate({ routeName: 'Signup' }),
+        NavigationActions.navigate({ routeName: 'Home' }),
         state
       );
       break;
