@@ -19,6 +19,7 @@ import {bindActionCreators}  from "redux"
 import {Login_Action} from "../../actions/actions"
 
 import {loginStyles} from "./styles";
+import { NavigationActions } from 'react-navigation'
 
 class Login extends Component {
 
@@ -31,6 +32,13 @@ class Login extends Component {
 
   login() {
     this.props.Login_Action();
+    const resetAction = NavigationActions.reset({
+      index: 0,
+      actions: [
+        NavigationActions.navigate({ routeName: 'Home'})
+      ]
+    });
+    this.props.navigation.dispatch(resetAction)
   }
 
 
