@@ -16,7 +16,13 @@ import {
 import {signUpStyles} from "./styles"
 
 export default class SignUp extends Component {
+  static navigationOptions = {
+    title: 'Signup',
+  };
+
+
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <KeyboardAvoidingView behavior="padding" style={signUpStyles.container}>
         <View style={signUpStyles.logoContainer} >
@@ -27,15 +33,6 @@ export default class SignUp extends Component {
         </View>
         <View style={signUpStyles.inputContainer}>
           <View style={signUpStyles.inputInnerContainer}>
-            <TextInput
-              autoCorrect={false}
-              autoCapitalize="none"
-              placeholder="Enter Email"
-              placeholderTextColor="#ffffff"
-              keyboardAppearance="light"
-              keyboardType="email-address"
-              returnKeyType="next"
-            />
             <TextInput
               autoCorrect={false}
               autoCapitalize="none"
@@ -55,6 +52,15 @@ export default class SignUp extends Component {
             <TextInput
               autoCorrect={false}
               autoCapitalize="none"
+              placeholder="Enter Email"
+              placeholderTextColor="#ffffff"
+              keyboardAppearance="light"
+              keyboardType="email-address"
+              returnKeyType="next"
+            />
+            <TextInput
+              autoCorrect={false}
+              autoCapitalize="none"
               placeholder="Enter Password"
               placeholderTextColor="#ffffff"
               keyboardAppearance="light"
@@ -66,6 +72,10 @@ export default class SignUp extends Component {
                     style={signUpStyles.loginButton}
                     title="Login"
             />
+            <TouchableHighlight  onPress={() => navigate('Signup')}>
+              <Text style={signUpStyles.title}>Aready Registered ? Login here</Text>
+            </TouchableHighlight>
+
           </View>
         </View>
       </KeyboardAvoidingView>

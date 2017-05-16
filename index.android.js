@@ -12,14 +12,19 @@ import {
 } from 'react-native';
 
 import SignUp from "./app/components/signup/signup"
+import Login from "./app/components/login/login"
 
-export default class instaclone extends Component {
+/*export default class instaclone extends Component {
   render() {
     return (
       <SignUp/>
     );
   }
-}
+}*/
 
+const instaclone = StackNavigator({
+  Signup: { screen: SignUp },
+  Login: { screen: Login },
+});
 
 AppRegistry.registerComponent('instaclone', () => instaclone);
