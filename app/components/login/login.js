@@ -14,9 +14,26 @@ import {
   Button
 } from 'react-native';
 
-import {loginStyles} from "./styles"
+import {connect} from "react-redux"
+import {bindActionCreators}  from "redux"
+import {Login_Action} from "../../actions/actions"
 
-export default class Login extends Component {
+import {loginStyles} from "./styles";
+
+class Login extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      text : ''
+    }
+  }
+
+  login() {
+    this.props.Login_Action();
+  }
+
+
   static navigationOptions = {
     title: 'Login',
   };
@@ -51,7 +68,7 @@ export default class Login extends Component {
               returnKeyType="go"
             />
             <Button color="#9b59b6"
-                    onPress={()=>{}}
+                    onPress={()=>{this.login()}}
                     style={loginStyles.loginButton}
                     title="Login"
             />
@@ -64,3 +81,16 @@ export default class Login extends Component {
     );
   }
 }
+
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({Login_Action},dispatch)
+}
+
+function mapStateToProps(state) {
+  return {
+    login : state
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Login)
