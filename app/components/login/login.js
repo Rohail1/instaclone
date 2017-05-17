@@ -34,7 +34,6 @@ class Login extends Component {
     this.props.Get_POST_ACTION();
   }
   loginDone () {
-    console.log('here');
     const resetAction = NavigationActions.reset({
       index: 0,
       actions: [
@@ -50,9 +49,7 @@ class Login extends Component {
   };
   componentDidUpdate (){
     const {post} = this.props.post || {};
-    console.log('post ',post);
     if(post && !post.isError){
-      console.log('in if !!');
       this.loginDone();
     }
   };
