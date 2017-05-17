@@ -32,21 +32,33 @@ class Login extends Component {
 
   login() {
     this.props.Get_POST_ACTION();
-   /* const resetAction = NavigationActions.reset({
+  }
+  loginDone () {
+    console.log('here');
+    const resetAction = NavigationActions.reset({
       index: 0,
       actions: [
         NavigationActions.navigate({ routeName: 'Home'})
       ]
     });
-    this.props.navigation.dispatch(resetAction)*/
+    this.props.navigation.dispatch(resetAction)
   }
 
 
   static navigationOptions = {
     title: 'Login',
   };
+  componentDidUpdate (){
+    const {post} = this.props.post || {};
+    console.log('post ',post);
+    if(post && !post.isError){
+      console.log('in if !!');
+      this.loginDone();
+    }
+  };
   render() {
     const { navigate } = this.props.navigation;
+
     return (
       <KeyboardAvoidingView behavior="padding" style={loginStyles.container}>
         <View style={loginStyles.logoContainer} >

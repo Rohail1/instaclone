@@ -53,9 +53,7 @@ function auth(state = {}, action) {
 function post(state = {},action) {
   switch (action.type) {
     case POST_RECIECVED:
-      const nextState = { post: action.payload};
-      console.log('next',nextState);
-      return nextState;
+      return  { post: action.payload};
     case ERROR_RECIEVED:
       return { post: action.payload};
     default:
