@@ -6,6 +6,7 @@
 import { combineReducers } from 'redux';
 import { NavigationActions } from 'react-navigation';
 
+import {LOGIN_ACTION,POST_RECIECVED, ERROR_RECIEVED} from "../common/constants"
 import { AppNavigator } from '../navigators/AppNavigator';
 
 // Start with two routes: The Main screen, with the Login screen on top.
@@ -38,7 +39,6 @@ function nav(state = initialNavState, action) {
   return nextState || state;
 }
 
-
 function auth(state = {}, action) {
   switch (action.type) {
     case 'Login':
@@ -50,8 +50,22 @@ function auth(state = {}, action) {
   }
 }
 
+function post(state = {},action) {
+  switch (action.type) {
+    case POST_RECIECVED:
+      const nextState = { post: action.payload};
+      console.log('next',nextState);
+      return nextState;
+    case ERROR_RECIEVED:
+      return { post: action.payload};
+    default:
+      return state;
+  }
+}
+
 const AppReducer = combineReducers({
   nav,
+  post,
   auth
 });
 
