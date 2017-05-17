@@ -16,7 +16,7 @@ import {
 
 import {connect} from "react-redux"
 import {bindActionCreators}  from "redux"
-import {Login_Action} from "../../actions/actions"
+import {Login_Action,Get_POST_ACTION} from "../../actions/actions"
 
 import {loginStyles} from "./styles";
 import { NavigationActions } from 'react-navigation'
@@ -26,19 +26,19 @@ class Login extends Component {
   constructor(props){
     super(props);
     this.state = {
-      text : ''
+      post : {}
     }
   }
 
   login() {
-    this.props.Login_Action();
-    const resetAction = NavigationActions.reset({
+    this.props.Get_POST_ACTION();
+   /* const resetAction = NavigationActions.reset({
       index: 0,
       actions: [
         NavigationActions.navigate({ routeName: 'Home'})
       ]
     });
-    this.props.navigation.dispatch(resetAction)
+    this.props.navigation.dispatch(resetAction)*/
   }
 
 
@@ -92,12 +92,13 @@ class Login extends Component {
 
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({Login_Action},dispatch)
+  return bindActionCreators({Login_Action,Get_POST_ACTION},dispatch)
 }
 
 function mapStateToProps(state) {
   return {
-    login : state
+    auth : state.auth,
+    post : state.post
   }
 }
 
