@@ -6,7 +6,7 @@
 import { combineReducers } from 'redux';
 import { NavigationActions } from 'react-navigation';
 
-import {LOGIN_ACTION,POST_RECIECVED, ERROR_RECIEVED} from "../common/constants"
+import {LOGIN_ACTION,LOGIN_SUCCESSFUL, SIGNUP_Error} from "../common/constants"
 import { AppNavigator } from '../navigators/AppNavigator';
 
 // Start with two routes: The Main screen, with the Login screen on top.
@@ -39,23 +39,12 @@ function nav(state = initialNavState, action) {
   return nextState || state;
 }
 
-function auth(state = {}, action) {
+function auth(state = {},action) {
   switch (action.type) {
-    case 'Login':
-      return { ...state, isLoggedIn: action.isLogin };
-    case 'Signup':
-      return { ...state, isLoggedIn: action.isLogin};
-    default:
-      return state;
-  }
-}
-
-function post(state = {},action) {
-  switch (action.type) {
-    case POST_RECIECVED:
-      return  { post: action.payload};
-    case ERROR_RECIEVED:
-      return { post: action.payload};
+    case LOGIN_SUCCESSFUL:
+      return  action.payload;
+    case SIGNUP_Error:
+      return action.payload;
     default:
       return state;
   }
@@ -63,7 +52,6 @@ function post(state = {},action) {
 
 const AppReducer = combineReducers({
   nav,
-  post,
   auth
 });
 

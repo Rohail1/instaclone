@@ -8,6 +8,7 @@ import {
   View,
   TextInput,
   Image,
+  Alert,
   Text,
   KeyboardAvoidingView,
   TouchableHighlight,
@@ -26,15 +27,19 @@ class Login extends Component {
   constructor(props){
     super(props);
     this.state = {
-      post : {}
+      post : {},
+      email : '',
+      password : ''
+    };
+    this.locals = {
+
     }
   }
 
-  login() {
-    this.props.Get_POST_ACTION();
+  login(data) {
+    this.props.Get_POST_ACTION(data);
   }
   loginDone () {
-    console.log('here');
     const resetAction = NavigationActions.reset({
       index: 0,
       actions: [
@@ -49,11 +54,10 @@ class Login extends Component {
     title: 'Login',
   };
   componentDidUpdate (){
-    const {post} = this.props.post || {};
-    console.log('post ',post);
-    if(post && !post.isError){
-      console.log('in if !!');
+    if(this.props.auth.data.success){
       this.loginDone();
+    }else {
+      Alert.alert(this.props.auth.data.message)
     }
   };
   render() {
@@ -65,7 +69,7 @@ class Login extends Component {
           <Image source={require('../../images/instalogo.png')}
                  style={loginStyles.instalogo}
           />
-          <Text style={loginStyles.title}>Instragram Clone | Powered by React Natve | Made by Rohail Najam</Text>
+          <Text style={loginStyles.title}>Instragram Clone | Powered by React Native | Made by Rohail Najam</Text>
         </View>
         <View style={loginStyles.inputContainer}>
           <View style={loginStyles.inputInnerContainer}>
@@ -76,6 +80,7 @@ class Login extends Component {
               placeholderTextColor="#ffffff"
               keyboardAppearance="light"
               keyboardType="email-address"
+              onChangeText={(email) => this.locals.email = email}
               returnKeyType="next"
             />
             <TextInput
@@ -85,10 +90,11 @@ class Login extends Component {
               placeholderTextColor="#ffffff"
               keyboardAppearance="light"
               secureTextEntry={true}
+              onChangeText={(password) =>  this.locals.password = password}
               returnKeyType="go"
             />
             <Button color="#9b59b6"
-                    onPress={()=>{this.login()}}
+                    onPress={()=>{this.login({email : this.locals.email,password : this.locals.password})}}
                     style={loginStyles.loginButton}
                     title="Login"
             />
@@ -109,8 +115,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps(state) {
   return {
-    auth : state.auth,
-    post : state.post
+    auth: state.auth,
   }
 }
 
