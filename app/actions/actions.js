@@ -3,7 +3,7 @@
  */
 
 
-import {LOGIN_ACTION,POST_RECIECVED, ERROR_RECIEVED} from "../common/constants"
+import {LOGIN_ACTION,LOGIN_SUCCESSFUL, SIGNUP_Error} from "../common/constants"
 
 
 export const Login_Action = () => {
@@ -13,33 +13,39 @@ export const Login_Action = () => {
   };
 };
 
-const fetchPost = () =>{
-  return fetch("https://jsonplaceholder.typicode.com/posts/1");
+const login = (data) =>{
+  let request = new Request('http://192.168.0.132:3000/auth/login', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: new Headers({
+      'content-type' : 'application/json'
+    })
+  });
+  return fetch(request);
 };
 
 const dataRecieved = (data) => {
   return {
-    type : POST_RECIECVED,
+    type : LOGIN_SUCCESSFUL,
     payload : {
-      data : data,
-      isError:false
+      data : data
     }
   }
 };
 const errorRecieved = (data) => {
+  console.log('err',data);
   return {
-    type : ERROR_RECIEVED,
+    type : SIGNUP_Error,
     payload : {
-      data : data,
-      isError:true
+      data : data
     }
   }
 };
 
-export const Get_POST_ACTION = () => {
+export const Get_POST_ACTION = (data) => {
 
   return dispatch => {
-    fetchPost()
+    login(data)
       .then(
         post => post.json(),
         error => dispatch(errorRecieved(error))
