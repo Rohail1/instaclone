@@ -12,19 +12,31 @@ import {
   Text,
   KeyboardAvoidingView,
   TouchableHighlight,
+  AsyncStorage,
+  ActivityIndicator,
   Button
 } from 'react-native';
 
 import {connect} from "react-redux"
 import {bindActionCreators}  from "redux"
-import {Login_Action,Get_POST_ACTION} from "../../actions/actions"
-
+import {Login_Action,Get_POST_ACTION,GET_ME_ACTION} from "../../actions/actions"
 import {loginStyles} from "./styles";
 import { NavigationActions } from 'react-navigation'
+
+const ActivityIndicatorMethod = (props) =>{
+  console.log('props.isApiCall',props.isApiCall);
+  if(props.isApiCall){
+    return (<ActivityIndicator size="large" color="white" />)
+  }else {
+    return null;
+  }
+}
+
 
 class Login extends Component {
 
   constructor(props){
+    props.isApiCall = false;
     super(props);
     this.state = {
       post : {},
@@ -35,7 +47,16 @@ class Login extends Component {
 
     }
   }
+  componentWillMount(){
+    AsyncStorage.getItem('token')
+      .then((token) => {
+        if(token)
+          this.props.GET_ME_ACTION(token);
+      },(error) => {
+        console.log('err',error)
+      });
 
+  }
   login(data) {
     this.props.Get_POST_ACTION(data);
   }
@@ -48,18 +69,30 @@ class Login extends Component {
     });
     this.props.navigation.dispatch(resetAction)
   }
-
-
   static navigationOptions = {
     title: 'Login',
   };
   componentDidUpdate (){
-    if(this.props.auth.data.success){
-      this.loginDone();
-    }else {
-      Alert.alert(this.props.auth.data.message)
+
+    if(this.props.user)
+      if(this.props.user.success){
+        AsyncStorage.setItem('token',this.props.user.jwt);
+        this.loginDone();
+      }else {
+        Alert.alert(this.props.user.message)
+      }
+    else if(this.props.me)
+      if(this.props.me.success){
+        this.loginDone();
+      }else {
+        Alert.alert(this.props.me.message)
+      }
+    else if (this.props.error) {
+      Alert.alert(this.props.error.message)
     }
   };
+
+
   render() {
     const { navigate } = this.props.navigation;
 
@@ -73,6 +106,7 @@ class Login extends Component {
         </View>
         <View style={loginStyles.inputContainer}>
           <View style={loginStyles.inputInnerContainer}>
+            <ActivityIndicatorMethod isApiCall={this.props.isApiCall}/>
             <TextInput
               autoCorrect={false}
               autoCapitalize="none"
@@ -110,13 +144,15 @@ class Login extends Component {
 
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({Login_Action,Get_POST_ACTION},dispatch)
+  return bindActionCreators({Login_Action,Get_POST_ACTION,GET_ME_ACTION},dispatch)
 }
 
 function mapStateToProps(state) {
   return {
-    auth: state.auth,
-  }
+    me : state.auth.me,
+    user : state.auth.user,
+    isApiCall : state.auth.isApiCall || false
+  };
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Login)

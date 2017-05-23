@@ -3,7 +3,7 @@
  */
 
 
-import {LOGIN_ACTION,LOGIN_SUCCESSFUL, SIGNUP_Error} from "../common/constants"
+import {LOGIN_ACTION,LOGIN_SUCCESSFUL, API_ERROR,ME_SUCCESSFUL,API_INPROGRESS} from "../common/constants"
 
 
 export const Login_Action = () => {
@@ -24,34 +24,69 @@ const login = (data) =>{
   return fetch(request);
 };
 
+const me = (token) => {
+  let request = new Request('http://192.168.0.132:3000/api/me', {
+    method: 'GET',
+    headers: new Headers({
+      'content-type' : 'application/json',
+      'instaclone-token' : JSON.parse(token)
+    })
+  });
+  return fetch(request);
+};
+
 const dataRecieved = (data) => {
   return {
     type : LOGIN_SUCCESSFUL,
-    payload : {
-      data : data
-    }
+    payload : data
   }
 };
-const errorRecieved = (data) => {
-  console.log('err',data);
+const API_ERROR_METHOD = (data,action) => {
   return {
-    type : SIGNUP_Error,
-    payload : {
-      data : data
-    }
+    type : action || API_ERROR,
+    payload : data
+  }
+};
+
+const meRecieved = (data) => {
+  return {
+    type : ME_SUCCESSFUL,
+    payload : data
+  }
+};
+
+const API_INPROGRESS_ACTION = () => {
+  return {
+    type : API_INPROGRESS,
   }
 };
 
 export const Get_POST_ACTION = (data) => {
 
   return dispatch => {
+    dispatch(API_INPROGRESS_ACTION());
     login(data)
       .then(
         post => post.json(),
-        error => dispatch(errorRecieved(error))
+        error => dispatch(API_ERROR_METHOD(error,API_ERROR))
       ).then(
       data => dispatch(dataRecieved(data)),
-      error => dispatch(errorRecieved(error))
+      error => dispatch(API_ERROR_METHOD(error,API_ERROR))
+    )
+  }
+};
+
+export const GET_ME_ACTION = (token) => {
+
+  return dispatch => {
+    dispatch(API_INPROGRESS_ACTION());
+    me(token)
+      .then(
+        res => res.json(),
+        error => dispatch(API_ERROR_METHOD(error,API_ERROR))
+      ).then(
+      data => dispatch(meRecieved(data)),
+      error => dispatch(API_ERROR_METHOD(error,API_ERROR))
     )
   }
 };

@@ -6,7 +6,7 @@
 import { combineReducers } from 'redux';
 import { NavigationActions } from 'react-navigation';
 
-import {LOGIN_ACTION,LOGIN_SUCCESSFUL, SIGNUP_Error} from "../common/constants"
+import {LOGIN_ACTION,LOGIN_SUCCESSFUL, API_ERROR,ME_SUCCESSFUL,API_INPROGRESS} from "../common/constants"
 import { AppNavigator } from '../navigators/AppNavigator';
 
 // Start with two routes: The Main screen, with the Login screen on top.
@@ -42,9 +42,13 @@ function nav(state = initialNavState, action) {
 function auth(state = {},action) {
   switch (action.type) {
     case LOGIN_SUCCESSFUL:
-      return  action.payload;
-    case SIGNUP_Error:
-      return action.payload;
+      return  {user : action.payload, isApiCall : false};
+    case ME_SUCCESSFUL:
+      return  {me : action.payload,isApiCall : false};
+    case API_INPROGRESS:
+      return  {isApiCall : true};
+    case API_ERROR:
+      return {error : action.payload,isApiCall : false};
     default:
       return state;
   }
