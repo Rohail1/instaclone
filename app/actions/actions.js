@@ -29,7 +29,7 @@ const me = (token) => {
     method: 'GET',
     headers: new Headers({
       'content-type' : 'application/json',
-      'instaclone-token' : JSON.parse(token)
+      'instaclone-token' : token
     })
   });
   return fetch(request);

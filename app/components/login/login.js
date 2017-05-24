@@ -24,13 +24,12 @@ import {loginStyles} from "./styles";
 import { NavigationActions } from 'react-navigation'
 
 const ActivityIndicatorMethod = (props) =>{
-  console.log('props.isApiCall',props.isApiCall);
   if(props.isApiCall){
     return (<ActivityIndicator size="large" color="white" />)
   }else {
     return null;
   }
-}
+};
 
 
 class Login extends Component {
@@ -76,8 +75,12 @@ class Login extends Component {
 
     if(this.props.user)
       if(this.props.user.success){
-        AsyncStorage.setItem('token',this.props.user.jwt);
-        this.loginDone();
+        console.log('this ',this.props.user.data.jwt);
+        AsyncStorage.setItem('token',this.props.user.data.jwt)
+          .then(()=> {
+            this.loginDone();
+          });
+
       }else {
         Alert.alert(this.props.user.message)
       }
