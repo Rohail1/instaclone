@@ -28,6 +28,9 @@ export const  loginStyles = StyleSheet.create({
   inputInnerContainer : {
     padding : 20
   },
+  indicator : {
+    color : "#ffffff"
+  },
   input : {
     height:20,
     marginBottom :20,
