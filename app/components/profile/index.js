@@ -26,5 +26,4 @@ export default class Profile extends Component {
       <Text> My Profile page</Text>
     )
   }
-
 }

@@ -16,6 +16,7 @@ const initialNavState = AppNavigator.router.getStateForAction(
 );
 
 function nav(state = initialNavState, action) {
+  console.log('action',action);
   let nextState;
   switch (action.type) {
     case 'Login':
@@ -30,6 +31,10 @@ function nav(state = initialNavState, action) {
         state
       );
       break;
+    case ME_SUCCESSFUL:
+      nextState = initialNavState;
+      console.log('ok ok');
+      break;
     default:
       nextState = AppNavigator.router.getStateForAction(action, state);
       break;
@@ -40,6 +45,7 @@ function nav(state = initialNavState, action) {
 }
 
 function auth(state = {},action) {
+
   switch (action.type) {
     case LOGIN_SUCCESSFUL:
       return  {user : action.payload, isApiCall : false};
